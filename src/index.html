@@ -1,12 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/js/main.js"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Travel</title>
+	</head>
+	<body class="body" data-theme="light">
+		<div class="bg-primary">
+			<!-- BEGIN POPUPS -->
+			<h1>Попапы</h1>
+
+			<a class="popup-open" href="#">Открыть popup</a>
+			<a class="popup-my-open" href="#">Открыть мой popup</a>
+
+			<div class="my-popup">
+				<div class="popka">
+					<a class="popka-close" href="#">Закрыть</a>
+					<p>Дааа...</p>
+				</div>
+			</div>
+			<div class="popup-fade">
+				<div class="popup">
+					<a class="popup-close" href="#">Закрыть</a>
+					<p>Всплывающие окна имеют широкий диапазон применений...</p>
+				</div>
+			</div>
+			<!-- END POPUPS -->
+
+			<!-- BEGIN BURGER -->
+			<div class="header">
+				<div class="container header__container">
+					<div class="menu-burger__header">
+						<span></span>
+					</div>
+				</div>
+				<nav class="header__nav">
+					<ul class="menu header__menu">
+						<li><a href="#" class="menu__item">Главная</a></li>
+						<li><a href="#" class="menu__item">Товары</a></li>
+						<li><a href="#" class="menu__item">Акции</a></li>
+						<li><a href="#" class="menu__item">Новинки</a></li>
+						<li><a href="#" class="menu__item">Доставка</a></li>
+						<li><a href="#" class="menu__item">Контакты</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="content-wrapper">
+				<div class="conteiner content-wrapper__container">
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
+						quis quas voluptates expedita laudantium. Soluta quam enim nesciunt
+						placeat est quasi tenetur, dolorum, iure nihil ipsum veniam dolore
+						quis! Culpa dignissimos eaque officiis illo doloremque ut corrupti
+						numquam dolorem praesentium.
+					</p>
+				</div>
+			</div>
+			<!-- END BURGER -->
+
+			<!-- TOOGLE THEME BEGIN -->
+			<h1 class="temka">ТЕМКА ОДНА ЕСТЬ</h1>
+			<!-- TOOGLE THEME END  -->
+		</div>
+		<script type="module" src="./js/main.js"></script>
+	</body>
 </html>
