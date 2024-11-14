@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
 import $ from 'jquery';
-import '../css/dkdk.scss';
+import '../scss/dkdk.scss';
 
 // BEGIN POPUPS
 $('.popup-open').on('click', function () {
