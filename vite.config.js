@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	root: './src',
-	base: '/Travel/',
+	base: '/travel/',
 	publicDir: './src/assets/',
 	server: {
 		port: 3000,
