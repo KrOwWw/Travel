@@ -1,74 +1,90 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
-import $ from 'jquery';
+// import $ from 'jquery';
 import '../scss/dkdk.scss';
+(() => {
+	'use strict';
 
-// BEGIN POPUPS
-$('.popup-open').on('click', function () {
-	$('.popup-fade').fadeIn();
-	return false;
-});
+	const getStoredTheme = () => localStorage.getItem('theme');
+	const setStoredTheme = theme => localStorage.setItem('theme', theme);
 
-$('.popup-close').on('click', function () {
-	$(this).parents('.popup-fade').fadeOut();
-	return false;
-});
+	const getPreferredTheme = () => {
+		const storedTheme = getStoredTheme();
+		if (storedTheme) {
+			return storedTheme;
+		}
 
-$(document).keydown(function (e) {
-	if (e.keyCode === 27) {
-		e.stopPropagation();
-		$('.popup-fade').fadeOut();
-	}
-});
+		return window.matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light';
+	};
 
-$('.popup-fade').on('click', function (e) {
-	if ($(e.target).closest('.popup').length == 0) {
-		$(this).fadeOut();
-	}
-});
+	const setTheme = theme => {
+		if (theme === 'auto') {
+			document.documentElement.setAttribute(
+				'data-bs-theme',
+				window.matchMedia('(prefers-color-scheme: dark)').matches
+					? 'dark'
+					: 'light',
+			);
+		} else {
+			document.documentElement.setAttribute('data-bs-theme', theme);
+		}
+	};
 
-$('.popup-my-open').on('click', function () {
-	$('.my-popup').fadeIn();
-	return false;
-});
-$('.popka-close').on('click', function () {
-	$(this).parents('.my-popup').fadeOut();
-	return false;
-});
-$(document).keydown(function (e) {
-	if (e.keyCode === 27) {
-		e.stopPropagation();
-		$('.my-popup').fadeOut();
-	}
-});
-$('.my-popup').on('click', function (e) {
-	if ($(e.target).closest('.popka').length == 0) {
-		$(this).fadeOut();
-	}
-});
+	setTheme(getPreferredTheme());
 
-// END POPUPS
+	const showActiveTheme = (theme, focus = false) => {
+		const themeSwitcher = document.querySelector('#bd-theme');
 
-// BEGIN BURGER
+		if (!themeSwitcher) {
+			return;
+		}
 
-$('.menu-burger__header').click(function () {
-	$('.menu-burger__header').toggleClass('open-menu');
-	$('.header__nav').toggleClass('open-menu');
-});
+		const themeSwitcherText = document.querySelector('#bd-theme-text');
+		const activeThemeIcon = document.querySelector('.theme-icon-active use');
+		const btnToActive = document.querySelector(
+			`[data-bs-theme-value="${theme}"]`,
+		);
+		const svgOfActiveBtn = btnToActive
+			.querySelector('svg use')
+			.getAttribute('href');
 
-// END BURGER
+		document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+			element.classList.remove('active');
+			element.setAttribute('aria-pressed', 'false');
+		});
 
-/* TOOGLE THEME BEGIN */
+		btnToActive.classList.add('active');
+		btnToActive.setAttribute('aria-pressed', 'true');
+		activeThemeIcon.setAttribute('href', svgOfActiveBtn);
+		const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
+		themeSwitcher.setAttribute('aria-label', themeSwitcherLabel);
 
-$('.temka').on('click', () => {
-	$('.body').attr('data-theme', 'dark');
-	$('.temka').attr('class', 'dark-temka');
-	alert('dkkdk');
-});
-$('.dark-temka').on('click', () => {
-	$('.body').attr('data-theme', 'light');
-	$('.dark-temka').attr('class', 'light-temka');
-	alert('dkkdsafasdfdk');
-});
+		if (focus) {
+			themeSwitcher.focus();
+		}
+	};
 
-/* TOOGLE THEME END */
+	window
+		.matchMedia('(prefers-color-scheme: dark)')
+		.addEventListener('change', () => {
+			const storedTheme = getStoredTheme();
+			if (storedTheme !== 'light' && storedTheme !== 'dark') {
+				setTheme(getPreferredTheme());
+			}
+		});
+
+	window.addEventListener('DOMContentLoaded', () => {
+		showActiveTheme(getPreferredTheme());
+
+		document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+			toggle.addEventListener('click', () => {
+				const theme = toggle.getAttribute('data-bs-theme-value');
+				setStoredTheme(theme);
+				setTheme(theme);
+				showActiveTheme(theme, true);
+			});
+		});
+	});
+})();
